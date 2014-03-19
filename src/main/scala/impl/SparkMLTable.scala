@@ -141,7 +141,7 @@ class SparkMLTable(@transient protected var rdd: RDD[MLRow], inSchema: Option[Sc
 //    }
     def cachedMatrixMap(m: LocalMatrix): Iterator[MLRow] = f(m).toMLRows
 
-    def createMatrix(i: Iterator[MLRow]): Iterator[LocalMatrix] = Iterator(DenseMLMatrix.fromVecs(i.map(_.toVector).toSeq))
+    def createMatrix(i: Iterator[MLRow]): Iterator[LocalMatrix] = Iterator(DenseMLMatrix.fromVecs(i.map(_.toMLVector).toSeq))
 
 
     cachedMat match {

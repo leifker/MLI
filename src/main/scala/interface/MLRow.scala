@@ -97,7 +97,7 @@ object MLRow {
     override def apply(from: MLRow) = from.newMlRowBuilder
   }
 
-  implicit def rowToVector(from: MLRow): MLVector = from.toVector
+  implicit def rowToVector(from: MLRow): MLVector = from.toMLVector
 }
 
 
@@ -120,7 +120,7 @@ class DenseMLRow(private val row: immutable.IndexedSeq[MLValue]) extends MLRow {
 
   lazy val vec = MLVector(row.toArray)
 
-  override implicit def toVector = vec
+  override implicit def toMLVector = vec
 
   def toDoubleArray = row.map(_.toNumber).toArray
 }
@@ -157,8 +157,8 @@ class SparseMLRow private(
   override def nonZeros = sparseElements.iterator
 
   lazy val vec = MLVector(iterator.toArray)
-  override implicit def toVector = MLVector(iterator.toArray)
-  def toDoubleArray = this.toVector.data.data
+  override implicit def toMLVector = MLVector(iterator.toArray)
+  def toDoubleArray = this.toMLVector.data.data
 
   //TODO: Need to do some performance testing here.
   override def newMlRowBuilder = new ArrayBuffer[MLValue]().mapResult({array =>
